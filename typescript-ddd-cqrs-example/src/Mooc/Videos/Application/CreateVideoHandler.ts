@@ -8,5 +8,4 @@ export class CreateVideoHandler implements ICommandHandler{
     invoke(command: CreateVideoCommand) {
         this.videoCreator.create(command.getId(), command.getTitle(), command.getDuration())
     }
-
 }

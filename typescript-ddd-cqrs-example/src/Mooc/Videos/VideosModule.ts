@@ -2,9 +2,13 @@ import { Module } from '@nestjs/common';
 import { VideoController } from './Infraestructure/VideoController';
 import { MemoryVideoRepository } from './Infraestructure/MemoryVideoRepository';
 import { CommandBusInMemorySync } from 'src/Shared/Infraestructure/Bus/CommandBusInMemorySync';
+import { QueryBusInMemorySync } from 'src/Shared/Infraestructure/Bus/QueryBusInMemorySync';
 import { CreateVideoCommand } from './Application/CreateVideoCommand';
 import { CreateVideoHandler } from './Application/CreateVideoHandler';
 import { CreateVideo } from './Application/CreateVideo';
+import { GetVideoQuery } from './Application/GetVideoQuery';
+import { GetVideoHandler } from './Application/GetVideoHandler';
+import { SearchVideo } from './Application/SearchVideo';
 
 @Module({
   controllers: [VideoController],
@@ -14,11 +18,14 @@ import { CreateVideo } from './Application/CreateVideo';
     useClass: MemoryVideoRepository
   },{
     provide: 'ICommandBus',
-    useValue: new CommandBusInMemorySync(new Map().set(CreateVideoCommand.name, new CreateVideoHandler(new CreateVideo(new MemoryVideoRepository()))))
+    useValue: new CommandBusInMemorySync(new Map()
+    .set(CreateVideoCommand.name, new CreateVideoHandler(new CreateVideo(new MemoryVideoRepository()))))
   },
   {
     provide: 'IQueryBus',
-    useClass: undefined
-  }],
+    useValue: new QueryBusInMemorySync(new Map()
+    .set(GetVideoQuery.name, new GetVideoHandler(new SearchVideo(new MemoryVideoRepository()))))
+  }
+  ],
 })
 export class VideosModule {}
