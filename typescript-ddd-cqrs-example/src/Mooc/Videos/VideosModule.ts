@@ -10,6 +10,8 @@ import { GetVideoQuery } from './Application/GetVideoQuery';
 import { GetVideoHandler } from './Application/GetVideoHandler';
 import { SearchVideo } from './Application/SearchVideo';
 
+const memoryVideoRepo = new MemoryVideoRepository();
+
 @Module({
   controllers: [VideoController],
   providers: [
@@ -19,12 +21,12 @@ import { SearchVideo } from './Application/SearchVideo';
   },{
     provide: 'ICommandBus',
     useValue: new CommandBusInMemorySync(new Map()
-    .set(CreateVideoCommand.name, new CreateVideoHandler(new CreateVideo(new MemoryVideoRepository()))))
+    .set(CreateVideoCommand.name, new CreateVideoHandler(new CreateVideo(memoryVideoRepo))))
   },
   {
     provide: 'IQueryBus',
     useValue: new QueryBusInMemorySync(new Map()
-    .set(GetVideoQuery.name, new GetVideoHandler(new SearchVideo(new MemoryVideoRepository()))))
+    .set(GetVideoQuery.name, new GetVideoHandler(new SearchVideo(memoryVideoRepo))))
   }
   ],
 })
