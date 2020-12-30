@@ -1,17 +1,17 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
-import { Video } from '../Domain/Video';
+import { Controller, Get, Param, Post, Body, Inject } from '@nestjs/common';
 import { CreateVideoDTO } from '../Domain/CreateVideoDTO';
 import { CreateVideoCommand } from '../Application/CreateVideoCommand';
 import { ICommandBus } from '../../../../src/Shared/Domain/Bus/Command/ICommandBus';
 import { IQueryBus } from '../../../../src/Shared/Domain/Bus/Query/IQueryBus';
 import { GetVideoQuery } from '../Application/GetVideoQuery'
+import { IResponse } from 'src/Shared/Domain/Bus/Query/IResponse';
 
 @Controller()
 export class VideoController {
-  constructor(private readonly commandBus: ICommandBus, private readonly queryBus: IQueryBus) {}
+  constructor(@Inject('ICommandBus') private readonly commandBus: ICommandBus, @Inject('IQueryBus')private readonly queryBus: IQueryBus) {}
 
   @Get(':id')
-  getVideo(@Param('id') id: string): Video {
+  getVideo(@Param('id') id: string): IResponse {
     const getVideoQuery: GetVideoQuery = new GetVideoQuery(id);
     return this.queryBus.dispatch(getVideoQuery);
   }
