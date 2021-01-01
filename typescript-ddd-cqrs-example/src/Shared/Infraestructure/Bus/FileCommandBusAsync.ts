@@ -10,6 +10,8 @@ export class FileCommandBusAsync implements ICommandBus {
         fs.appendFileSync(this.filename, command.serialize()+"\n");
     }
 
-    handler(commandClassName: string, commandHandler: any): void {}
+    handler(commandClassName: string, commandHandler: any): void {
+        //This is empty cause the async command bus is not redirecting anything
+    }
     
 }
