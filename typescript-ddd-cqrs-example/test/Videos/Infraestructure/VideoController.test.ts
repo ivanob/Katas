@@ -6,7 +6,7 @@ import { Video } from '../../../src/Mooc/Videos/Domain/Video';
 import { VideoId } from '../../../src/Mooc/Videos/Domain/VideoId';
 import { CreateVideoDTO } from '../../../src/Mooc/Videos/Domain/CreateVideoDTO';
 
-describe('VideoController', () => {
+describe.skip('VideoController', () => {
   let videoController: VideoController;
   const mockVideo = new Video('2', 'abc', 60);
   /* This mock represents the MemoryVideoRepository, that is used by the controller
