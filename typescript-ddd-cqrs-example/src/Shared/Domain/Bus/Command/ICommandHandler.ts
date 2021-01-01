@@ -2,5 +2,5 @@
 import { ICommand } from '../Command/ICommand'
 
 export interface ICommandHandler {
-    invoke(command: ICommand)
+    invoke(command: ICommand): void
 }

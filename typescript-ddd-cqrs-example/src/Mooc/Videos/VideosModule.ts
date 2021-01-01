@@ -9,6 +9,7 @@ import { CreateVideo } from './Application/CreateVideo';
 import { GetVideoQuery } from './Application/GetVideoQuery';
 import { GetVideoHandler } from './Application/GetVideoHandler';
 import { SearchVideo } from './Application/SearchVideo';
+import { FileCommandBusAsync } from '../../Shared/Infraestructure/Bus/FileCommandBusAsync';
 
 const memoryVideoRepo = new MemoryVideoRepository();
 
@@ -18,7 +19,8 @@ const memoryVideoRepo = new MemoryVideoRepository();
   { //Here is where I do the dependency injection, as Nestjs resolves de dependencies by name and can't infere by type
     provide: 'IVideoRepository',
     useClass: MemoryVideoRepository
-  },{
+  },
+  {
     provide: 'ICommandBus',
     useValue: new CommandBusInMemorySync(new Map()
     .set(CreateVideoCommand.name, new CreateVideoHandler(new CreateVideo(memoryVideoRepo))))
@@ -27,6 +29,10 @@ const memoryVideoRepo = new MemoryVideoRepository();
     provide: 'IQueryBus',
     useValue: new QueryBusInMemorySync(new Map()
     .set(GetVideoQuery.name, new GetVideoHandler(new SearchVideo(memoryVideoRepo))))
+  },
+  {
+    provide: 'ICommandAsyncBus',
+    useValue: new FileCommandBusAsync('serialized_commands.txt')
   }
   ],
 })
