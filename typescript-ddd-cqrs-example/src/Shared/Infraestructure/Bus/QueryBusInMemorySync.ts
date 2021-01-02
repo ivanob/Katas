@@ -8,7 +8,7 @@ export class QueryBusInMemorySync implements IQueryBus {
 
     dispatch(command: IQuery): IResponse {
         const commandName: string = command.constructor.name
-        return this.route.get(commandName).invoke(command);
+        return this.route.get(commandName).ask(command);
     }
 
     handler(commandClassName: string, commandHandler: any): void {

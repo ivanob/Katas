@@ -6,7 +6,7 @@ import { IResponse } from '../../../Shared/Domain/Bus/Query/IResponse'
 export class SearchVideoHandler implements IQueryHandler{
     constructor(private readonly searchVideo: SearchVideo){}
 
-    invoke(command: GetVideoQuery): IResponse {
+    ask(command: GetVideoQuery): IResponse {
         return this.searchVideo.search(command.getId())
     }
 }
