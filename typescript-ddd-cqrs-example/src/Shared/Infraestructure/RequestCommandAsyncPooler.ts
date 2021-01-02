@@ -36,7 +36,7 @@ export class RequestCommandAsyncPooler {
                     })
                 }
             })
-            await this.delay(1000);
+            await this.delay(1000); //Just create a delay to simulate the asynchronicity
         }
     }
 }
