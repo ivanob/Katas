@@ -23,4 +23,8 @@ export class MemoryVideoRepository implements IVideoRepository{
         return videoFound;
     }
 
+    trimVideo(id: string, newDuration: number) {
+        const video = this.searchVideo(id);
+        video.duration = newDuration;
+    }
 }

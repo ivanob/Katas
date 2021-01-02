@@ -11,7 +11,7 @@ import { GetVideoHandler } from './Application/GetVideoHandler';
 import { SearchVideo } from './Application/SearchVideo';
 import { FileCommandBusAsync } from '../../Shared/Infraestructure/Bus/FileCommandBusAsync';
 
-const memoryVideoRepo = new MemoryVideoRepository();
+export const memoryVideoRepo = new MemoryVideoRepository();
 
 @Module({
   controllers: [VideoController],
